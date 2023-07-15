@@ -1,0 +1,47 @@
+C++ code:
+
+#include <iostream>
+#include <vector>
+
+struct Product {
+std::string name;
+double unitPrice;
+double gstPercentage;
+int quantity;
+};
+
+int main() {
+std::vector<Product> basket;
+
+// Add products to the basket
+basket.push_back({"Leather wallet", 1100, 18, 1});
+basket.push_back({"Umbrella", 900, 12, 4});
+basket.push_back({"Cigarette", 200, 28, 3});
+basket.push_back({"Honey", 100, 0, 2});
+
+double maxGSTAmount = 0;
+std::string productWithMaxGST;
+
+double totalAmount = 0;
+
+for (const auto& product : basket) {
+double gstAmount = (product.unitPrice * product.gstPercentage) / 100;
+if (gstAmount > maxGSTAmount) {
+maxGSTAmount = gstAmount;
+productWithMaxGST = product.name;
+}
+
+double discountedPrice = product.unitPrice;
+if (product.unitPrice >= 500) {
+discountedPrice *= 0.95;
+}
+
+double totalPrice = discountedPrice * product.quantity;
+totalAmount += totalPrice;
+}
+
+std::cout << "Product with maximum GST amount: " << productWithMaxGST << std::endl;
+std::cout << "Total amount to be paid: Rs. " << totalAmount << std::endl;
+
+return 0;
+}
